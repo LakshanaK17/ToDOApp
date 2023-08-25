@@ -6,7 +6,7 @@
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('/todos');
+      const response = await axios.get('http://localhost:9090/todos');
       todos = response.data;
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -46,28 +46,31 @@
   }
 </script>
 
-<h1>Todo List</h1>
+<h1 class="text-2xl font-bold mb-4">Todo List</h1>
 
-<table>
+<table class="table-auto w-full">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Item</th>
-      <th>Completed</th>
+      <th class="px-4 py-2">#</th>
+      <th class="px-4 py-2">Item</th>
+      <th class="px-4 py-2">Status</th>
+      <th class="px-4 py-2">Check</th>
     </tr>
   </thead>
   <tbody>
     {#each todos as todo}
     <tr>
-      <td>{todo.id}</td>
-      <td>{todo.item}</td>
-      <td>{todo.completed ? "Completed" : "Not Completed"}</td>
-      <td><input type="checkbox" bind:checked={todo.completed} on:change={() => toggleTodoStatus(todo.id)} /></td>
+      <td class="border px-4 py-2">{todo.id}</td>
+      <td class="border px-4 py-2">{todo.item}</td>
+      <td class="border px-4 py-2">{todo.completed ? "Completed" : "Not Completed"}</td>
+      <td class="border px-4 py-2">
+        <input type="checkbox" class="form-checkbox" bind:checked={todo.completed} on:change={() => toggleTodoStatus(todo.id)} />
+      </td>
     </tr>
     {/each}
   </tbody>
 </table>
 
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click={addTodo}>
+<button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click={addTodo}>
   Add Todo
 </button>
